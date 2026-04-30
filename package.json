@@ -1,0 +1,19 @@
+{
+  "name": "smart-dynamic-island",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "electron": "^41.3.0",
+    "firebase": "^12.12.1"
+  }
+}

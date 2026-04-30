@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Island Messenger</title>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #000; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+        .card { background: #111; padding: 30px; border-radius: 24px; width: 90%; max-width: 400px; border: 1px solid #222; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        h2 { margin-top: 0; font-weight: 600; color: #fff; }
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; background: #1a1a1a; border: 1px solid #333; border-radius: 12px; color: #fff; box-sizing: border-box; font-size: 16px; }
+        button { width: 100%; padding: 15px; background: #00d26a; border: none; border-radius: 12px; color: #000; font-weight: 700; cursor: pointer; transition: 0.2s; font-size: 16px; margin-top: 10px; }
+        button:active { transform: scale(0.98); }
+        .status { margin-top: 15px; font-size: 14px; color: #888; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Island'a Yaz ☁️</h2>
+        <input type="text" id="from" placeholder="Adınız (Örn: Ayşe)">
+        <textarea id="msg" placeholder="Mesajınız..." rows="3"></textarea>
+        <button onclick="send()">Gönder</button>
+        <div class="status" id="status">Bağlantı bekleniyor...</div>
+    </div>
+
+    <script>
+        // .env'den gelen anahtarlarınızı buraya yapıştırın (Veya ben sizin yerinize yapıştırayım)
+        const firebaseConfig = {
+            apiKey: "AIzaSyD8pR2LdePbJPYgmA5IX2ArT19wMs8j3YE",
+            authDomain: "smart-island-assistant.firebaseapp.com",
+            projectId: "smart-island-assistant",
+            storageBucket: "smart-island-assistant.firebasestorage.app",
+            messagingSenderId: "1031185231960",
+            appId: "1:1031185231960:web:152ae8358ca2c276a51a2d"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        async function send() {
+            const from = document.getElementById('from').value || 'Bilinmeyen';
+            const text = document.getElementById('msg').value;
+            const status = document.getElementById('status');
+
+            if (!text) return alert("Mesaj boş olamaz!");
+
+            status.innerText = "Gönderiliyor...";
+            try {
+                // Client_A'ya mesaj gönderiyoruz (Çünkü bilgisayarınız Client_A olarak dinliyor)
+                await db.collection('islands').doc('Client_A').update({
+                    event: {
+                        type: 'message',
+                        from: from,
+                        text: text,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    }
+                });
+                status.innerText = "Mesaj iletildi! ✅";
+                document.getElementById('msg').value = '';
+            } catch (err) {
+                console.error(err);
+                status.innerText = "Hata oluştu! ❌";
+            }
+        }
+    </script>
+</body>
+</html>

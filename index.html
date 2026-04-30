@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Dynamic Island</title>
+    <!-- Premium Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Markdown & Syntax Highlighting -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="island-container">
+        <div id="island" class="collapsed">
+
+            <!-- 1. Idle View -->
+            <div class="idle-content">
+                <div class="idle-info-default">
+                    <span id="idle-clock">00:00</span>
+                    <span id="idle-temp">--°C</span>
+                </div>
+                <div class="idle-info-music" style="display: none;">
+                    <i data-lucide="music" class="mini-music-icon"></i>
+                    <span id="mini-song-name">...</span>
+                </div>
+                <div id="unread-badge-pill" class="unread-badge">0</div>
+            </div>
+
+            <!-- 2. Music View -->
+            <div class="music-view">
+                <div class="album-art-container">
+                    <div class="album-art"></div>
+
+                </div>
+                <div class="music-info">
+                    <span class="song-name">Bilinmeyen Şarkı</span>
+                    <span class="artist-name">Sanatçı</span>
+                </div>
+                <div class="music-controls">
+                    <i data-lucide="skip-back" class="music-btn" id="music-prev"></i>
+                    <div class="play-pause-circle" id="music-play-pause">
+                        <i data-lucide="play" class="music-btn-main"></i>
+                    </div>
+                    <i data-lucide="skip-forward" class="music-btn" id="music-next"></i>
+                </div>
+            </div>
+
+
+            <!-- 2. Search View -->
+            <div class="search-bar">
+                <i data-lucide="search" class="search-icon"></i>
+                <input type="text" placeholder="AI ile konuşun..." id="search-input" spellcheck="false">
+                <div id="unread-badge-search" class="unread-badge-icon">
+                    <i data-lucide="bell"></i>
+                    <span class="badge-count">0</span>
+                </div>
+                <div class="icon-click-area" id="cancel-search">
+                    <i data-lucide="x" class="close-icon-mini"></i>
+                </div>
+            </div>
+
+            <!-- 3. Thinking View -->
+            <div class="thinking-view">
+                <div class="spinner"></div> <!-- Bu yeşil dönen halka -->
+                <span class="thinking-text">Düşünülüyor...</span>
+                <div class="icon-click-area" id="cancel-thinking">
+                    <i data-lucide="x" class="close-icon-mini"></i>
+                </div>
+            </div>
+
+            <!-- 4. Expanded View (Results & History) -->
+            <div class="expanded-view">
+                <div class="header">
+                    <div class="title" id="expanded-title">Bildirimler</div>
+                    <div class="close-btn-circle" id="close-expanded">
+                        <i data-lucide="x" class="close-icon"></i>
+                    </div>
+                </div>
+
+                <!-- Karusel Alanı -->
+                <div class="carousel-container">
+                    <div class="carousel-track" id="carousel-track">
+                        <!-- Kartlar buraya dinamik gelecek -->
+                    </div>
+                    <div class="carousel-nav">
+                        <button id="prev-msg"><i data-lucide="chevron-left"></i></button>
+                        <span id="carousel-info">1 / 1</span>
+                        <button id="next-msg"><i data-lucide="chevron-right"></i></button>
+                    </div>
+                </div>
+
+                <div class="button-list"></div>
+            </div>
+
+
+            <!-- 5. Reply View -->
+            <div class="reply-view">
+                <div class="reply-header">
+                    <span class="reply-label">Cevap ver: <b id="reply-contact">Ali</b></span>
+                </div>
+                <div class="reply-body">
+                    <input type="text" id="reply-input" placeholder="Mesajınızı yazın...">
+                    <button id="send-reply-btn"><i data-lucide="send"></i></button>
+                </div>
+                <!-- Başarı Mesajı Katmanı -->
+                <div class="reply-success" id="reply-success">
+                    <i data-lucide="check-circle" class="success-icon"></i>
+                    <span>Mesaj İletildi!</span>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+    <script src="renderer.js"></script>
+</body>
+
+</html>
